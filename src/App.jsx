@@ -1,82 +1,33 @@
-// import React, { Component } from 'react';
-// import FormAddContact from './components/form/FormAddContact';
-// import ContactList from 'components/contactList/ContactList';
-// import Filter from './components/filter/Filter';
-// import { nanoid } from 'nanoid';
+import React, { Component } from 'react';
+import Modal from './components/Modal/Modal';
+import Searchbar from 'components/searchbar/Saerchbar';
+import ImageGallery from './components/imageGallery/ImageGallery';
+import Button from './components/Button/Button';
 
-  
-// class App extends Component {
-//   state = {
-//     contacts: [],
-//     filter:'',
-//   };
 
-//   addContact = state => {
-//     console.log(state.name)
-//     const contact = {
-//       id: nanoid(),
-//       name: state.name,
-//       number: state.number,
-//     }
-//     const contactsArrey = this.state.contacts;
-//     const isFindContact = contactsArrey.find(contact=>contact.name===state.name);
-//     if (isFindContact) {
-//       alert(`${state.name} is already in contacts`);
-//     } else {
-//       this.setState(prevState => ({
-//         contacts: [...prevState.contacts, contact], 
-//       })); 
-//     }
+class App extends Component {
+  state={
+    images:'',
+  }
+
+  handleFormSubmit = images =>{
+    this.setState({images})
     
-//   }
+  };
 
-//   deleteContact = contactId => {
-//     this.setState(prevState => ({
-//       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-//     }));
-//   };
+  render() {
+    const {images, showModal}  = this.state;
 
-//   changeFilter = e => {
-//     this.setState({ filter: e.currentTarget.value });
-//   }
-
-//   componentDidMount() {
-//     const contacts = localStorage.getItem('contacts');
-//     const parsedContacts = JSON.parse(contacts);
-//     if (parsedContacts) {
-//       this.setState({ contacts: parsedContacts });
-//     }
-    
-//   }
-  
-//   componentDidUpdate(prevProps, prevState) {
-//     if (this.state.contacts !== prevState.contacts) {
-//       console.log('обновилось поле контактов');
-//       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-//     }
-//   }
-
-//   render() {
-//     const { contacts, filter } = this.state;
-//     const normalizedFilter = filter.toLowerCase();
-//     const visibleContact = this.state.contacts.filter(contact =>
-//       contact.name.toLowerCase().includes(normalizedFilter)
-//     );
-    
-//     return (
-//       <div>
-//         <h1>Phonebook</h1>
-//         <FormAddContact onSubmit={this.addContact}/>
+    return (
+      <div>
+        {showModal&&<Modal onClose={this.toggleModal}/>}
+        <Searchbar onSubmit={this.handleFormSubmit}/>
+        {images&&<ImageGallery imagesSearch={this.state.images}/>}
+        {images &&<Button />}
         
-//         <h2>Contacts</h2>
-//         <Filter value={filter} onChange={ this.changeFilter}/>
-//         {contacts.length > 0 && <ContactList
-//           contacts={visibleContact}
-//           onDeleteContact={this.deleteContact}
-//         />}
-//       </div>
-//     ); 
-//   }
-// };
+      </div>
+    ); 
+  }
+}; 
 
-// export default  App;
+export default  App;

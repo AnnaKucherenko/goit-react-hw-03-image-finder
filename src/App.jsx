@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Modal from './components/Modal/Modal';
+// import Modal from './components/Modal/Modal';
 import Searchbar from 'components/searchbar/Saerchbar';
 import ImageGallery from './components/imageGallery/ImageGallery';
-import Button from './components/Button/Button';
+// import Button from './components/Button/Button';
 
 
 class App extends Component {
@@ -16,18 +16,23 @@ class App extends Component {
   };
 
   render() {
-    const {images, showModal}  = this.state;
+    const {images}  = this.state;
 
     return (
       <div>
-        {showModal&&<Modal onClose={this.toggleModal}/>}
+        {/* {showModal&&<Modal onClose={this.toggleModal}/>} */}
         <Searchbar onSubmit={this.handleFormSubmit}/>
         {images&&<ImageGallery imagesSearch={this.state.images}/>}
-        {images &&<Button />}
+        {/* {images&&<Button />} */}
         
       </div>
     ); 
+
+  
+  }; 
+
   }
-}; 
+
+  
 
 export default  App;

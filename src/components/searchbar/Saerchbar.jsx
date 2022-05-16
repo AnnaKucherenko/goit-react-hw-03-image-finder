@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import { ImSearch } from 'react-icons/im';
 import styles from './Searchbar.module.css';
 
 export default class Searchbar extends Component {
@@ -25,6 +26,7 @@ export default class Searchbar extends Component {
             <header className={styles.searchbar}>
                 <form onSubmit={this.handleSubmit} className={styles.searchForm}>
                     <button type="submit" className={styles.searchForm_button}>
+                        <ImSearch style={{ marginRight: 5, width: 35 }} />
                         <span className={styles.searchForm_buttonLabel }>Search</span>
                     </button>
 

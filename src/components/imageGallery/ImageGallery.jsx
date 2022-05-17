@@ -10,26 +10,23 @@ export default class ImagesGallery extends Component{
         images:[],
         error: null,
         status: 'idle',
-        page: 0,
+        page: 1,
         showModal: false,
         modalImage: '',
     }
 
-    toggleModal=()=>{
+    toggleModal=(image)=>{
         this.setState(({showModal})=>({
             showModal:!showModal,
         }));
-        
+        this.setState({modalImage: image});
         
     };
 
-    imageTransferToModal=(image)=>{
-        this.setState({modalImage: image.largeImageURL});
-    }
-
     componentDidMount(){
             
-            this.setState({status:'pending', page: 1});
+            this.setState({status:'pending'});
+            
             
             fetch(`https://pixabay.com/api/?q=${this.props.imagesSearch}&page=1&key=25716572-e092d498007de7d313bf56634&image_type=photo&orientation=horizontal&per_page=12`)
             .then(response=>{
@@ -76,11 +73,12 @@ export default class ImagesGallery extends Component{
                 console.log(prevState);
                 return {page: prevState.page + 1};
             
-            });
-            
-            const page = this.state.page;
-            console.log(this.state)
-            console.log('завантажує наступну сторінку')
+            }, this.fetchImages);
+                       
+    }
+
+    fetchImages =()=>{
+        const page = this.state.page;
             fetch(`https://pixabay.com/api/?q=${this.props.imagesSearch}&page=${page}&key=25716572-e092d498007de7d313bf56634&image_type=photo&orientation=horizontal&per_page=12`)
             .then(response=>{
                 if(response.ok){
@@ -115,7 +113,7 @@ export default class ImagesGallery extends Component{
                     <ul className={styles.imageGallery}>
                         {images.map(image=>(
                             
-                            <ImageGalleryItem   onClick={(this.toggleModal, ()=>this.imageTransferToModal(image))} image={image} key={image.id}/>
+                            <ImageGalleryItem   onClick={()=>this.toggleModal(image.largeImageURL)} image={image} key={image.id}/>
                         )
                             
                         )}
